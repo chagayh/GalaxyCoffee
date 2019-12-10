@@ -17,7 +17,7 @@
     <LinearLayout
         android:id="@+id/SliderDots1"
         android:layout_width="0dp"
-        android:layout_height="46dp"
+        android:layout_height="30dp"
         android:gravity="clip_vertical|center_horizontal"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,7 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="fill_parent"
-        android:layout_height="238dp"
+        android:layout_height="200dp"
         android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,51 +38,24 @@
     <TextView
         android:id="@+id/textView3"
         android:layout_width="0dp"
-        android:layout_height="172dp"
+        android:layout_height="66dp"
         android:background="#00FFFFFF"
         android:gravity="center"
         android:padding="5dp"
+        android:shadowColor="@color/black"
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="5"
-        android:shadowColor="@color/black"
         android:text="Swipe And Choose Your Milk Type:"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="#FFFFFF"
-        android:textSize="50dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:fontFamily="cursive"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/SliderDots1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/proceed_coffee">
-
-        <TextView
-            android:id="@+id/coffee_type"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:shadowColor="@color/black"
-            android:shadowDx="2"
-            android:shadowDy="2"
-            android:shadowRadius="15"
-            android:text="Regular Milk"
-            android:textColor="@color/white_smoke"
-            android:textSize="30sp"
-            android:textStyle="bold|italic"
-            app:fontFamily="casual" />
-    </LinearLayout>
 
     <ImageButton
         android:id="@+id/proceed_coffee"
@@ -94,6 +67,25 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SliderDots1" />
+
+    <TextView
+        android:id="@+id/coffee_type"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:shadowColor="@color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="7"
+        android:text="Regular Milk"
+        android:textColor="@color/white_smoke"
+        android:textSize="15sp"
+        android:textStyle="bold|italic"
+        app:fontFamily="casual"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/proceed_coffee" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

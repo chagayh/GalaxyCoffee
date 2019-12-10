@@ -99,8 +99,10 @@ public class ShoppingCart extends AppCompatActivity {
      */
     public void onChooseMilk(View v) {
         data.currentIndex = getLineIdx(v);
+        data.inShopCart = true;
         Intent addIntent = new Intent(getApplicationContext(), ChooseMilkWindow.class);
         startActivity(addIntent);
+        finish();
     }
 
     /*

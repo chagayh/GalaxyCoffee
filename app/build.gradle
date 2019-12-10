@@ -29,4 +29,5 @@ dependencies {
 
     //Add Library
     implementation 'com.nex3z:notification-badge:0.1.0'
+
 }

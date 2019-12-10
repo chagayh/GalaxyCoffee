@@ -33,93 +33,73 @@
         android:id="@+id/videoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:shadowColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:shadowColor="@color/black" />
 
     <ImageButton
         android:id="@+id/instagram_button"
         android:layout_width="81dp"
         android:layout_height="78dp"
-        android:layout_marginBottom="172dp"
         android:background="@drawable/ripple"
         android:scaleType="fitCenter"
         android:src="@drawable/instagem_5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hashtag2"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/orderNumber" />
 
     <TextView
         android:id="@+id/orderNumber"
-        android:layout_width="388dp"
+        android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:autoText="true"
+        android:background="#CCA9A9A9"
+        android:gravity="center"
         android:shadowColor="@color/black"
+        android:shadowDx="4"
+        android:shadowDy="4"
+        android:shadowRadius="10"
         android:textColor="@color/white"
         android:textSize="30sp"
-        android:gravity="center"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/videoView"
-        app:layout_constraintHorizontal_bias="0.478"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/videoView"
-        app:layout_constraintVertical_bias="0.356" />
-
-    <TextView
-        android:id="@+id/prepareYourOrder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autoText="true"
-        android:shadowColor="@color/black"
-        android:text="Your coffee is on the way"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/hashtag"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orderNumber"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/videoView" />
 
     <TextView
         android:id="@+id/hashtag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autoText="true"
+        android:layout_width="match_parent"
+        android:layout_height="27dp"
+        android:background="#CCA9A9A9"
         android:gravity="center"
         android:shadowColor="@color/black"
-        android:text=" For a 10 coupon tag your photos with"
+        android:shadowDx="4"
+        android:shadowDy="4"
+        android:shadowRadius="10"
+        android:text=" For a 10% coupon tag your photos on instagram with"
         android:textColor="@color/white"
-        android:textSize="30sp"
+        android:textSize="15sp"
+
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/hashtag2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orderNumber"
-        app:layout_constraintVertical_bias="0.163" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/hashtag2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:autoText="true"
+        android:background="#CCA9A9A9"
+        android:gravity="center"
         android:shadowColor="@color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="5"
+        android:text="#CoffeeBucks"
         android:textColor="@color/white"
         android:textSize="50sp"
+
         android:textStyle="bold|italic"
-        android:text="#CoffeeBucks"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hashtag"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintBottom_toTopOf="@+id/instagram_button"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

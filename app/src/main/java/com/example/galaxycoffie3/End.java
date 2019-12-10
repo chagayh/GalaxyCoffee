@@ -33,7 +33,7 @@ public class End extends AppCompatActivity {
         // Hook up the VideoView to our UI.
         videoBG = findViewById(R.id.videoView);
         orderNumber = (TextView) findViewById(R.id.orderNumber);
-        orderNumber.setText("Order number:\n" + (int)(Math.random()*300));
+        orderNumber.setText("Order number:\n" + (int) (Math.random() * 300));
         // Build your video Uri
         Uri uri = Uri.parse("android.resource://" // First start with this,
                 + getPackageName() // then retrieve your package name,

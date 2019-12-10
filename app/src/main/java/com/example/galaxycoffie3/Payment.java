@@ -72,7 +72,7 @@ public class Payment extends AppCompatActivity implements View.OnTouchListener {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationCancel(animation);
-                Intent addIntent = new Intent(getApplicationContext(), End.class);
+                Intent addIntent = new Intent(getApplicationContext(), Camera.class);
                 startActivity(addIntent);
             }
         });

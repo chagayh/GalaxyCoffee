@@ -1,5 +1,7 @@
 package com.example.galaxycoffie3;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.ArrayList;
@@ -35,6 +37,12 @@ class Data {
 
     /* the shopping cart icon notification badge*/
     NotificationBadge badge;
+
+    /* the layout of the activity we open popup in*/
+    ConstraintLayout layout;
+
+    /* telling if we call the choose milk activity from the shopping cart*/
+    boolean inShopCart = false;
 
     /* the current index we selected in the shop cart activity*/
     int currentIndex;

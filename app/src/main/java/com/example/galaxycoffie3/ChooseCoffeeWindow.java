@@ -1,12 +1,14 @@
 package com.example.galaxycoffie3;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -15,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nex3z.notificationbadge.NotificationBadge;
+
+import java.io.Serializable;
 
 
 public class ChooseCoffeeWindow extends AppCompatActivity {
@@ -92,9 +96,13 @@ public class ChooseCoffeeWindow extends AppCompatActivity {
             public void onClick(View view) {
                 Coffee coffee = new Coffee(coffeeType, Data.getPriceByType(coffeeType));
                 if (data.addItem(coffee) == Data.ADD_SUCCESS) {
-                    badge.setNumber(data.shopCart.size());
-
+                    data.currentIndex = data.shopCart.size() - 1;
                     Toast.makeText(mContext, Data.getCoffeeName(coffeeType) + " Added to Cart", Toast.LENGTH_SHORT).show();
+                    ConstraintLayout myLayout = findViewById(R.id.activity_window1);
+                    data.layout = myLayout;
+                    myLayout.setAlpha((float) 0.35);
+                    Intent addIntent = new Intent(getApplicationContext(), ChooseMilkWindow.class);
+                    startActivity(addIntent);
                 } else {
                     Toast.makeText(mContext, "Only 4 Items Allowed Per User", Toast.LENGTH_SHORT).show();
                 }
