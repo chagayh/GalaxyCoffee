@@ -8,6 +8,20 @@
         <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
     </style>
 
+    <style name="AppTheme.testTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/light_blue</item>
+        <item name="colorPrimaryDark">@color/light_blue</item>
+        <item name="colorAccent">@color/light_blue</item>
+        <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
+    </style>
+    <style name="AppTheme.transparentTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/light_blue</item>
+        <item name="colorPrimaryDark">@color/light_blue</item>
+        <item name="colorAccent">@color/light_blue</item>
+        <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
+    </style>
+
+
     <style name="AppTheme" parent="@style/BaseAppTheme" />
 
     <style name="CustomActivityAnimation" parent="@android:style/Animation.Activity">
@@ -20,6 +34,13 @@
     <style name="AppTheme.CustomTheme">
         <item name="android:windowIsFloating">@color/colorPrimary</item>
         <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="AppTheme.CustomTheme2">
+        <item name="android:windowIsFloating">@color/colorPrimary</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
 </resources>

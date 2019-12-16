@@ -1,9 +1,13 @@
 package com.example.galaxycoffie3;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +19,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 
 public class ShoppingCart extends AppCompatActivity {
 
     private LinearLayout parentLinearLayout;
-    ImageButton goToPayment, addAnotherButton;
+    LottieAnimationView addAnotherButton;
+    Button goToPayment;
     TextView totalPrice;
     Data data = Data.getSingleton();
     Context mContext;
@@ -43,6 +50,10 @@ public class ShoppingCart extends AppCompatActivity {
             TextView order = rowView.findViewById(R.id.cur_order);
             TextView price = rowView.findViewById(R.id.price);
             Button milk = rowView.findViewById(R.id.choose_milk);
+            AnimationDrawable animationDrawable = (AnimationDrawable) milk.getBackground();
+            animationDrawable.setEnterFadeDuration(2000);
+            animationDrawable.setExitFadeDuration(4000);
+            animationDrawable.start();
             ImageView image = rowView.findViewById(R.id.imageView);
             Coffee coffee = data.shopCart.get(orderNum);
             order.setText(Data.getCoffeeName(coffee.getCoffeeType()));
@@ -61,6 +72,7 @@ public class ShoppingCart extends AppCompatActivity {
                 if (checkIfMilkSet()) {
                     Intent addIntent = new Intent(getApplicationContext(), Payment.class);
                     startActivity(addIntent);
+
                 } else if (data.shopCart.size() == 0) {
                     Toast.makeText(mContext, "Shopping Cart is Empty\n" +
                             " Add Items by pressing the '+' Button", Toast.LENGTH_SHORT).show();
@@ -71,18 +83,34 @@ public class ShoppingCart extends AppCompatActivity {
 
             }
         });
-        //edge cases
+
         addAnotherButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (data.shopCart.size() < Data.MAX_ITEM_AMOUNT) {
-                    Intent addIntent = new Intent(getApplicationContext(), ChooseCoffeeWindow.class);
-                    startActivity(addIntent);
+                    addAnotherButton.setProgress(0);
+                    addAnotherButton.playAnimation();
+                    addAnotherButton.setEnabled(false);
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent addIntent = new Intent(getApplicationContext(), ChooseCoffeeWindow.class);
+                            startActivity(addIntent);
+                            finish();
+                        }
+                    }, 800);
                 } else {
                     Toast.makeText(mContext, "Only 4 Items Allowed Per User", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        finish();
     }
 
     /*
@@ -91,18 +119,20 @@ public class ShoppingCart extends AppCompatActivity {
     private int getLineIdx(View v) {
         ViewParent field = v.getParent();
         ViewParent linearLayout = field.getParent();
-        return ((ViewGroup) linearLayout).indexOfChild((View) field) - 1;
+        return ((ViewGroup) linearLayout).indexOfChild((View) field);
     }
 
     /*
     controls what happens when the user presses the choose milk button
      */
     public void onChooseMilk(View v) {
+        v.setEnabled(false);
         data.currentIndex = getLineIdx(v);
         data.inShopCart = true;
+        ConstraintLayout myLayout = findViewById(R.id.activity_shopping_cart);
+        myLayout.setAlpha((float) 0.35);
         Intent addIntent = new Intent(getApplicationContext(), ChooseMilkWindow.class);
-        startActivity(addIntent);
-        finish();
+        startActivityForResult(addIntent, 1);
     }
 
     /*

@@ -1,10 +1,15 @@
 package com.example.galaxycoffie3;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.graphics.Rect;
+import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +22,9 @@ class ViewPagerAdapter extends PagerAdapter {
     private LayoutInflater layoutInflater;
     private int[] images;
     private int state;
+    private Rect rect;
 
-    public ViewPagerAdapter(Context context, int[] array, int state) {
+    ViewPagerAdapter(Context context, int[] array, int state) {
         this.mContext = context;
         images = array;
         this.state = state;
@@ -34,6 +40,7 @@ class ViewPagerAdapter extends PagerAdapter {
         return view == object;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
 
@@ -41,7 +48,7 @@ class ViewPagerAdapter extends PagerAdapter {
         View view = layoutInflater.inflate(R.layout.custom_layout, null);
 
         // not replaced
-        ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+        final ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
         imageView.setImageResource(images[position]);
 
         imageView.setOnClickListener(new View.OnClickListener() {

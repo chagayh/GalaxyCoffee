@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -84,11 +85,11 @@ public class ChooseMilkWindow extends AppCompatActivity {
                     startActivity(addIntent);
                     finish();
 
-                } else {
-                    data.layout.setAlpha(1);
-                    data.badge.setNumber(data.shopCart.size());
-                    finish();
                 }
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_OK,returnIntent);
+                finish();
+
             }
         });
 
@@ -136,7 +137,18 @@ public class ChooseMilkWindow extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //your method call
-        Toast.makeText(mContext, "Choose milk First", Toast.LENGTH_SHORT).show();
+        if (data.inShopCart) {
+            data.inShopCart = false;
+            Intent addIntent = new Intent(getApplicationContext(), ShoppingCart.class);
+            startActivity(addIntent);
+            finish();
+
+        }
+        else {
+            Intent returnIntent = new Intent();
+            setResult(Activity.RESULT_CANCELED, returnIntent);
+            finish();
+        }
     }
 
 }

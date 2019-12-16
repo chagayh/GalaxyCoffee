@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.galaxycoffie3"
-        minSdkVersion 15
+        minSdkVersion 22
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -29,5 +29,8 @@ dependencies {
 
     //Add Library
     implementation 'com.nex3z:notification-badge:0.1.0'
+    implementation 'com.airbnb.android:lottie:3.3.1'
+    implementation 'com.github.pwittchen:swipe-rx2:0.3.0'
+    implementation 'com.tomer:fadingtextview:2.5'
 
 }

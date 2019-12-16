@@ -6,8 +6,9 @@
     android:id="@+id/activity_window2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_new"
+    android:background="@drawable/rounded_layout"
     tools:context=".ChooseMilkWindow">
+
 
     <!--    android:paddingLeft="@android:dimen/thumbnail_width"-->
     <!--    android:paddingRight="@dimen/activity_horizontal_margin"-->
@@ -38,21 +39,22 @@
     <TextView
         android:id="@+id/textView3"
         android:layout_width="0dp"
-        android:layout_height="66dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:background="#00FFFFFF"
         android:gravity="center"
         android:padding="5dp"
         android:shadowColor="@color/black"
-        android:shadowDx="2"
-        android:shadowDy="2"
-        android:shadowRadius="5"
-        android:text="Swipe And Choose Your Milk Type:"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="4"
+        android:text="Swipe And Choose Your Milk"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
+        android:textColor="@color/dark_cyan"
+        android:textSize="28sp"
         android:textStyle="bold"
-        app:fontFamily="cursive"
+        app:fontFamily="@font/cherry_swash_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -62,7 +64,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/ripple_3"
-        android:src="@drawable/add_button_3"
+        android:src="@drawable/plus_2"
+        app:layout_constraintBottom_toTopOf="@+id/coffee_type"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,17 +78,17 @@
         android:layout_weight="1"
         android:gravity="center"
         android:shadowColor="@color/black"
-        android:shadowDx="2"
-        android:shadowDy="2"
-        android:shadowRadius="7"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="4"
         android:text="Regular Milk"
-        android:textColor="@color/white_smoke"
-        android:textSize="15sp"
-        android:textStyle="bold|italic"
-        app:fontFamily="casual"
+        android:textColor="@color/dark_cyan"
+        android:textSize="26sp"
+        android:textStyle="normal"
+        app:fontFamily="@font/bubblegum_sans"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/proceed_coffee" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

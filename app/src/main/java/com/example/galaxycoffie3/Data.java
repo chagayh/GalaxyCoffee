@@ -14,10 +14,10 @@ class Data {
     /*=============================================================================*/
     /*                                Constants                                    */
     /*=============================================================================*/
-    private static final String SPACE_UNICORN_COFFEE = "Space Unicorn Coffee";
-    private static final String MILKY_WAY_COFFEE = "Milky Way Coffee";
-    private static final String NEBULA_COFFEE = "Nebula Coffee";
-    private static final String CELESTIAL_COFFEE = "Celestial Coffee";
+    private static final String SPACE_UNICORN_COFFEE = "Space Unicorn";
+    private static final String MILKY_WAY_COFFEE = "Milky Way";
+    private static final String NEBULA_COFFEE = "Nebula";
+    private static final String CELESTIAL_COFFEE = "Celestial";
     private static final String REGULAR_MILK = "Regular Milk";
     private static final String SOY_MILK = "Soy Milk";
     private static final String ALMOND_MILK = "Almond Milk";
@@ -31,6 +31,8 @@ class Data {
     static final int ADD_FAILURE = -1;
     static final int MAX_ITEM_AMOUNT = 4;
     /*=============================================================================*/
+
+    String costumerName;
 
     /* array list representing our shopping cart*/
     ArrayList<Coffee> shopCart = new ArrayList<>();

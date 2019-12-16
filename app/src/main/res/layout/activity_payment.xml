@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,19 +12,18 @@
         android:layout_width="226dp"
         android:layout_height="45dp"
         android:ems="10"
-        android:hint="Coupon code"
+        android:hint="Enter your name"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.507" />
+        app:layout_constraintTop_toBottomOf="@+id/date_entry_field" />
 
     <EditText
         android:id="@+id/creditCard"
         android:layout_width="225dp"
         android:layout_height="44dp"
         android:digits=" 1234567890"
+        android:imeOptions="actionNext"
         android:ems="10"
         android:hint="Credit Card"
         android:inputType="number"
@@ -34,8 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_Name"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/textView" />
 
     <EditText
         android:id="@+id/md_pass"
@@ -59,31 +56,29 @@
         android:gravity="start"
         android:orientation="horizontal"
         android:textAlignment="textStart"
-        app:layout_constraintBottom_toTopOf="@id/ed_Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.4"
         android:textColor="@color/black"
         android:textSize="14sp"
-        android:textStyle="bold|italic"
-        app:fontFamily="casual" />
+        android:textStyle="normal"
+        app:fontFamily="casual"
+        app:layout_constraintBottom_toTopOf="@+id/totalOrder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/totalOrder"
         android:layout_width="320dp"
         android:layout_height="80dp"
-        android:textAlignment="center"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/autour_one"
         android:gravity="clip_vertical|center_horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/ed_Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orderDetails"
-        app:layout_constraintVertical_bias="0.3"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="bold|italic"
-        app:fontFamily="casual"/>
+        app:layout_constraintBottom_toTopOf="@+id/creditCard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <ImageView
         android:id="@+id/buttonImage"
@@ -100,39 +95,36 @@
         android:id="@+id/buttonImage1"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginLeft="17dp"
+        android:layout_marginStart="300dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/q"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.017"
-        app:layout_constraintStart_toEndOf="@+id/ed_Name"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.521" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date_entry_field" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/cherry_swash_bold"
+        android:gravity="center"
         android:text="What you ordered:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:fontFamily="cursive"
-        app:layout_constraintBottom_toTopOf="@+id/ed_Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.097" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/date_entry_field"
         android:layout_width="227dp"
         android:layout_height="43dp"
         android:ems="10"
-        android:hint="Exp. MM/YYYY"
+        android:hint="Exp. MM/YY"
         android:inputType="date"
+        android:maxLength="5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
@@ -151,14 +143,16 @@
         app:layout_constraintVertical_bias="0.909" />
 
     <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="250dp"
         android:layout_height="100dp"
+        android:src="@drawable/security"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/security"
-        app:layout_constraintVertical_bias="1.02"
-        app:layout_constraintHorizontal_bias="0.5" />
+        app:layout_constraintVertical_bias="1.02" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

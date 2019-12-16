@@ -4,14 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
+
+import com.airbnb.lottie.LottieAnimationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +31,10 @@ public class MainActivity extends AppCompatActivity {
     int mCurrentVideoPosition;
     Button button;
     ImageButton imageButton, imageButton2;
+    LottieAnimationView animation;
     Context context;
+    LottieAnimationView confetti;
+    ImageView logo;
 
 
     @Override
@@ -62,36 +72,50 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        button = findViewById(R.id.btLogInButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        final TextView getCoffeeText = findViewById(R.id.getCoffee);
+        animation = findViewById(R.id.animation);
+        animation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addIntent = new Intent(getApplicationContext(), ChooseCoffeeWindow.class);
-                startActivity(addIntent);
+                getCoffeeText.setText(null);
+                animation.setProgress(0);
+                animation.playAnimation();
+                animation.setRepeatCount(Animation.INFINITE);
+                animation.setEnabled(false);
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Do something after 100ms
+                        animation.setEnabled(true);
+                        Intent addIntent = new Intent(getApplicationContext(), ShareOrder.class);
+                        startActivity(addIntent);
+                    }
+                }, 1000);
             }
         });
-        imageButton = findViewById(R.id.instagram_button);
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        confetti = findViewById(R.id.confetti);
+        logo = findViewById(R.id.logo);
+        logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = getPackageManager().getLaunchIntentForPackage("com.instagram.android");
-                try {
-                    startActivity(i);
-                } catch (Exception e) {
-                    Toast.makeText(context, "Instagram not found, please install", Toast.LENGTH_SHORT).show();
-                }
+                confetti.setVisibility(View.VISIBLE);
+                confetti.setProgress(0);
+                confetti.playAnimation();
             }
         });
-        imageButton2 = findViewById(R.id.trip_adviser_button);
-        imageButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /* set our trip adviser link*/
-                Uri uri = Uri.parse("http://www.tripadvisor.com");
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }
-        });
+//        button = findViewById(R.id.button);
+//        AnimationDrawable animationDrawable = (AnimationDrawable) button.getBackground();
+//        animationDrawable.setEnterFadeDuration(2000);
+//        animationDrawable.setExitFadeDuration(4000);
+//        animationDrawable.start();
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent addIntent = new Intent(getApplicationContext(), ChooseCoffeeWindow.class);
+//                startActivity(addIntent);
+//            }
+//        });
 
     }
 
