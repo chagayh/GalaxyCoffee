@@ -18,20 +18,54 @@ class Data {
     private static final String MILKY_WAY_COFFEE = "Milky Way";
     private static final String NEBULA_COFFEE = "Nebula";
     private static final String CELESTIAL_COFFEE = "Celestial";
-    private static final String REGULAR_MILK = "Regular Milk";
-    private static final String SOY_MILK = "Soy Milk";
-    private static final String ALMOND_MILK = "Almond Milk";
-    private static final String RICE_MILK = "Rice Milk";
     private static final int UNICORN_PRICE = 3;
     private static final int MILKYWAY_PRICE = 4;
     private static final int NEBULA_PRICE = 2;
     private static final int CELESTIAL_PRICE = 5;
     private static final String NO_MILK = "Choose Milk";
     static final int ADD_SUCCESS = 0;
-    static final int ADD_FAILURE = -1;
+    private static final int ADD_FAILURE = -1;
     static final int MAX_ITEM_AMOUNT = 4;
+    static final int STATE_COFFEE = 0;
+    static final int STATE_MILK = 1;
+    static final int EMPTY = 0;
+    static final String CART_EMPTY_MSG = "Your Cart is Empty\n" +
+            "Please Choose at least one item to continue";
+    static final String ONLY_4_ITEMS_MSG = "Only 4 Items Allowed Per User";
+    static final String REGULAR_MILK = "Regular Milk";
+    static final String SOY_MILK = "Soy Milk";
+    static final String ALMOND_MILK = "Almond Milk";
+    static final String RICE_MILK = "Rice Milk";
+    static final String NAME_DIALOG_TITLE = "What do you need my name for?";
+    static final String NAME_DIALOG_MSG = "With this name we will call you when Your order is ready";
+    static final String INVALID_EXP_DATE_MSG = "Enter a valid date: MM/YY";
+    static final String INVALID_CREDIT_CARD_NUM_MSG = "Enter a valid credit card number (16 digits)";
+    static final String INVALID_CVV_NUM_MSG = "Enter a valid cvv number (3 digits)";
+    static final String EMPTY_NAME_MSG = "Enter a Name";
+
+    /*=============================================================================*/
+    /*                                Enums                                        */
     /*=============================================================================*/
 
+    /**
+     * Enum of coffee types
+     */
+    enum CoffeeTypes {
+        MilkyWayCoffee, SpaceUnicornCoffee, NebulaCoffee, CelestialCoffee
+    }
+
+    /**
+     * Enum of Milk Types
+     */
+    enum MilkTypes {
+        RegularMilk, SoyMilk, AlmondMik, RiceMilk, NoMilk
+    }
+
+    /*=============================================================================*/
+    /*                                Members                                      */
+    /*=============================================================================*/
+
+    /* the name of the current costumer, we use this name in the transition screen*/
     String costumerName;
 
     /* array list representing our shopping cart*/
@@ -49,26 +83,13 @@ class Data {
     /* the current index we selected in the shop cart activity*/
     int currentIndex;
 
-
-    /**
-     * Enum of coffee types
-     */
-    enum CoffeeTypes {
-        MilkyWayCoffee, SpaceUnicornCoffee, NebulaCoffee, CelestialCoffee
-    }
-
-    /**
-     * Enum of Milk Types
-     */
-    enum MilkTypes {
-        RegularMilk, SoyMilk, AlmondMik, RiceMilk, NoMilk
-    }
-
-    static final int STATE_COFFEE = 0;
-    static final int STATE_MILK = 1;
-
     /* creating the data singleton*/
     private static Data data = new Data();
+
+    /*=============================================================================*/
+    /*                                  Other                                      */
+    /*=============================================================================*/
+
 
     /**
      * private constructor as we do not want any instances of this class other then the 1 we made.

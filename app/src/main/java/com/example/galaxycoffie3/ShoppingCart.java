@@ -3,6 +3,7 @@ package com.example.galaxycoffie3;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -13,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,51 +21,63 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 
-
+/**
+ * This activity represents the shopping cart, which contains all the user orders.
+ */
 public class ShoppingCart extends AppCompatActivity {
 
+    public static final String EMPTY_SHOPPING_CART_MSG = "Shopping Cart is Empty\n" +
+            " Add Items by pressing the '+' Button";
+    public static final String NO_MILK_CHOOSE_MSG = "You Forgot to set Milk to Some\n" +
+            "of your items.\n";
+    public static final String MAX_ORDER_EXCCEEDED_MSG = "Only 4 Items Allowed Per User";
+    /* The parent linear layout, used for knowing each line's location on screen */
     private LinearLayout parentLinearLayout;
-    LottieAnimationView addAnotherButton;
-    Button goToPayment;
+    /* button animation which allows user to add another order to his cart */
+    LottieAnimationView AddToCartButton;
+    /* button which transfer the user to payment screen if being pressed */
+    Button goToPaymentButton;
+    /* the order's total price */
     TextView totalPrice;
+    /* we use the data object here for information about user orders */
     Data data = Data.getSingleton();
-    Context mContext;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
-        mContext = this;
+
         totalPrice = findViewById(R.id.total_price);
         parentLinearLayout = findViewById(R.id.parent_linear_layout);
-        goToPayment = findViewById(R.id.goToPayment);
-        addAnotherButton = findViewById(R.id.returnToCoffee);
+        goToPaymentButton = findViewById(R.id.goToPayment);
+        AddToCartButton = findViewById(R.id.returnToCoffee);
         //update user's order in cart screen
         for (int orderNum = 0; orderNum < data.shopCart.size(); orderNum++) {
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final View rowView = inflater.inflate(R.layout.field, null);
+            assert inflater != null;
+            @SuppressLint("InflateParams") final View rowView = inflater.inflate(R.layout.field, null);
             // Add the new row before the add field button.
             parentLinearLayout.addView(rowView, parentLinearLayout.getChildCount() - 1);
-            TextView order = rowView.findViewById(R.id.cur_order);
+            TextView userOrder = rowView.findViewById(R.id.cur_order);
             TextView price = rowView.findViewById(R.id.price);
-            Button milk = rowView.findViewById(R.id.choose_milk);
-            AnimationDrawable animationDrawable = (AnimationDrawable) milk.getBackground();
-            animationDrawable.setEnterFadeDuration(2000);
-            animationDrawable.setExitFadeDuration(4000);
-            animationDrawable.start();
-            ImageView image = rowView.findViewById(R.id.imageView);
+            Button changeMilkButton = rowView.findViewById(R.id.choose_milk);
+            AnimationDrawable milkButtonAnimation = (AnimationDrawable) changeMilkButton.getBackground();
+            milkButtonAnimation.setEnterFadeDuration(2000);
+            milkButtonAnimation.setExitFadeDuration(4000);
+            milkButtonAnimation.start();
+            ImageView coffeeImage = rowView.findViewById(R.id.imageView);
             Coffee coffee = data.shopCart.get(orderNum);
-            order.setText(Data.getCoffeeName(coffee.getCoffeeType()));
+            userOrder.setText(Data.getCoffeeName(coffee.getCoffeeType()));
             String priceStr = Data.getPriceByType(coffee.getCoffeeType()) + "$";
             price.setText(priceStr);
-            milk.setText(Data.getMilkName(coffee.getMilkType()));
-            image.setImageResource(data.returnImageId(coffee.getCoffeeType()));
+            changeMilkButton.setText(Data.getMilkName(coffee.getMilkType()));
+            coffeeImage.setImageResource(data.returnImageId(coffee.getCoffeeType()));
         }
         String totalTextView = "Total: " + data.getTotalPrice() + "$";
         totalPrice.setText(totalTextView);
         //move to payment screen
-        goToPayment.setOnClickListener(new View.OnClickListener() {
+        goToPaymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //edge cases
@@ -74,39 +86,48 @@ public class ShoppingCart extends AppCompatActivity {
                     startActivity(addIntent);
 
                 } else if (data.shopCart.size() == 0) {
-                    Toast.makeText(mContext, "Shopping Cart is Empty\n" +
-                            " Add Items by pressing the '+' Button", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ShoppingCart.this,
+                            EMPTY_SHOPPING_CART_MSG, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(mContext, "You Forgot to set Milk to Some\n" +
-                            "of your items.\n", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ShoppingCart.this, NO_MILK_CHOOSE_MSG,
+                            Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-
-        addAnotherButton.setOnClickListener(new View.OnClickListener() {
+        //move to chooseCoffee screen
+        AddToCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (data.shopCart.size() < Data.MAX_ITEM_AMOUNT) {
-                    addAnotherButton.setProgress(0);
-                    addAnotherButton.playAnimation();
-                    addAnotherButton.setEnabled(false);
+                    AddToCartButton.setProgress(0);
+                    AddToCartButton.playAnimation();
+                    AddToCartButton.setEnabled(false);
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            Intent addIntent = new Intent(getApplicationContext(), ChooseCoffeeWindow.class);
+                            Intent addIntent = new Intent(getApplicationContext(),
+                                    ChooseCoffeeWindow.class);
                             startActivity(addIntent);
                             finish();
                         }
                     }, 800);
                 } else {
-                    Toast.makeText(mContext, "Only 4 Items Allowed Per User", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ShoppingCart.this, MAX_ORDER_EXCCEEDED_MSG,
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
+
+    /**
+     * This function is called When the user is done with the subsequent activity and returns.
+     *
+     * @param requestCode identifies from which Intent we came back.
+     * @param resultCode  indicates weather the request was successful.
+     * @param intent      An Intent that carries the result data.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -150,7 +171,6 @@ public class ShoppingCart extends AppCompatActivity {
     */
     @Override
     public void onBackPressed() {
-        //your method call
         data.badge.setNumber(data.shopCart.size());
         super.onBackPressed();
     }
@@ -169,5 +189,4 @@ public class ShoppingCart extends AppCompatActivity {
         }
         return true;
     }
-
 }

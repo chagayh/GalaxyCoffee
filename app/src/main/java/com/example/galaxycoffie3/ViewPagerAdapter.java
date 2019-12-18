@@ -4,25 +4,33 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.graphics.Rect;
-import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
-
+/**
+ * the adapter for the viewPager in which we set the viewpager images and instantiate the
+ * actual viewpager
+ */
 class ViewPagerAdapter extends PagerAdapter {
 
+    /*=============================================================================*/
+    /*                                Members                                      */
+    /*=============================================================================*/
+
+    /* the context of the activity using the adapter*/
     private Context mContext;
-    private LayoutInflater layoutInflater;
+    /* the adapter images*/
     private int[] images;
     private int state;
-    private Rect rect;
+
+    /*=============================================================================*/
+    /*                                  Other                                      */
+    /*=============================================================================*/
 
     ViewPagerAdapter(Context context, int[] array, int state) {
         this.mContext = context;
@@ -36,19 +44,21 @@ class ViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view == object;
     }
 
+    @NonNull
     @SuppressLint("ClickableViewAccessibility")
     @Override
-    public Object instantiateItem(ViewGroup container, final int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, final int position) {
 
-        layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.custom_layout, null);
+        LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        assert layoutInflater != null;
+        @SuppressLint("InflateParams") View view = layoutInflater.inflate(R.layout.custom_layout, null);
 
         // not replaced
-        final ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+        final ImageView imageView = view.findViewById(R.id.imageView);
         imageView.setImageResource(images[position]);
 
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +76,7 @@ class ViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
 
         ViewPager vp = (ViewPager) container;
         View view = (View) object;

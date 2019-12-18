@@ -1,11 +1,11 @@
 package com.example.galaxycoffie3;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,70 +13,63 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.os.Bundle;
 import android.os.Handler;
-
-import com.airbnb.lottie.LottieAnimationView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
+/**
+ * This activity represent the payment activity of the app.
+ * This is the activity where the user pay for the coffee he ordered.
+ */
 public class Payment extends Activity implements View.OnTouchListener {
-    /**
-     * This activity represent the payment activity of the app.
-     * This is the activity where the user pay for the coffee he ordered.
-     */
 
+    /*=============================================================================*/
+    /*                                Members                                      */
+    /*=============================================================================*/
+
+    /* we use the data object in this screen in order to get information about the user orders */
     Data data = Data.getSingleton();
-    private ImageView check_button;
-    private ImageView question_mark_button;
-    private EditText mDateEntryField;
-    private EditText creditCardField;
-    private EditText cvvField;
-    private EditText nameField;
-    private ProgressBar prg;
+    /* the fields in which the user enters his credit cart/name */
+    private EditText creditCardExpField, creditCardNumberField, cvvField, nameField;
+    //TODO - avriram's animation
     private Handler mHandler;
-    private boolean isValidDate = false;
-    private boolean isValidCard = false;
-    private boolean isValidCvv = false;
+    /* indicated user's input being valid or not */
+    private boolean isValidDate, isValidCard, isValidCvv, isValidName = false;
+    /* indicates weather the payment is finished */
     private boolean paymentDone = false;
-    private boolean isValidName = false;
+    /* the end of payment animation */
     private ObjectAnimator progressAnimator;
-    LottieAnimationView toggle;
-    int flag = 0;
-    LottieAnimationView upload;
 
 
     /**
      * this function responsible to initialize all the elements in this activity, get all the
      * relevant user data from the Data object and display the order details.
      */
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
-        check_button = findViewById(R.id.buttonImage);
-        question_mark_button = findViewById(R.id.buttonImage1);
-        mDateEntryField = findViewById(R.id.date_entry_field);
-        mDateEntryField.addTextChangedListener(mDateEntryWatcher);
-
-        creditCardField = findViewById(R.id.creditCard);
-        creditCardField.addTextChangedListener(creditCardWatcher);
-
-        cvvField = findViewById(R.id.md_pass);
+        ImageView endOfPaymentButton = findViewById(R.id.endOfPaymentButton);
+        ImageView question_mark_button = findViewById(R.id.questionMark);
+        //initialization of all fields and their corresponding watchers
+        creditCardExpField = findViewById(R.id.expDateField);
+        creditCardExpField.addTextChangedListener(expDateWatcher);
+        creditCardNumberField = findViewById(R.id.creditCardField);
+        creditCardNumberField.addTextChangedListener(creditCardWatcher);
+        cvvField = findViewById(R.id.cvvField);
         cvvField.addTextChangedListener(cvvWatcher);
-
-        nameField = findViewById(R.id.ed_Name);
+        nameField = findViewById(R.id.nameField);
         nameField.addTextChangedListener(nameWatcher);
-
-        prg = findViewById(R.id.progressBar);
+        creditCardNumberField.addTextChangedListener(new CreditCardNumberFormattingTextWatcher());
+        //end of payment progress bar animation
+        ProgressBar prg = findViewById(R.id.progressBarAnimation);
         progressAnimator = ObjectAnimator.ofInt(prg, "progress", 0, 100);
         progressAnimator.setDuration(2000);
         progressAnimator.addListener(new AnimatorListenerAdapter() {
@@ -89,12 +82,14 @@ public class Payment extends Activity implements View.OnTouchListener {
                 finish();
             }
         });
+        //controls what happens when user presses the question mark button-displayed a message
+        //requesting from him to enter his name and explains why
         question_mark_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog alertDialog = new AlertDialog.Builder(Payment.this).create();
-                alertDialog.setTitle("What do you need my name for?");
-                alertDialog.setMessage("With this name we will call you when Your order is ready");
+                alertDialog.setTitle(Data.NAME_DIALOG_TITLE);
+                alertDialog.setMessage(Data.NAME_DIALOG_MSG);
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -107,50 +102,14 @@ public class Payment extends Activity implements View.OnTouchListener {
         question_mark_button.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(Payment.this, "long click", Toast.LENGTH_LONG);
                 return false;
             }
         });
 
-        creditCardField.addTextChangedListener(new CreditCardNumberFormattingTextWatcher());
-        check_button.setOnTouchListener(this);
+        endOfPaymentButton.setOnTouchListener(this);
         cartDisplay();
-
-
-//        toggle = findViewById(R.id.lav_toggle);
-//        toggle.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                changeState();
-//            }
-//        });
-//
-//        upload = findViewById(R.id.upload);
-//        upload.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                upload.setProgress(0);
-//                upload.pauseAnimation();
-//                upload.playAnimation();
-//                Toast.makeText(Payment.this, "Cheers!!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
-
-    private void changeState() {
-        if (flag == 0) {
-            toggle.setMinAndMaxProgress(0f, 0.43f); //Here, calculation is done on the basis of start and stop frame divided by the total number of frames
-            toggle.playAnimation();
-            flag = 1;
-            //---- Your code here------
-        } else {
-            toggle.setMinAndMaxProgress(0.5f, 1f);
-            toggle.playAnimation();
-            flag = 0;
-            //---- Your code here------
-        }
-    }
 
     /**
      * a function to display all the cart elements the user ordered
@@ -162,13 +121,14 @@ public class Payment extends Activity implements View.OnTouchListener {
         ArrayList<Coffee> cart = data.shopCart;
         for (int i = 0; i < cart.size(); i++) {
             Coffee currCoffee = cart.get(i);
-            total += data.getPriceByType(currCoffee.getCoffeeType());
-            orderDetails.append(data.getCoffeeName(currCoffee.getCoffeeType()));
-            orderDetails.append(",\t" + data.getMilkName(currCoffee.getMilkType()));
-            orderDetails.append(",\t" + data.getPriceByType(currCoffee.getCoffeeType()));
+            total += Data.getPriceByType(currCoffee.getCoffeeType());
+            orderDetails.append(Data.getCoffeeName(currCoffee.getCoffeeType()));
+            orderDetails.append(",\t" + Data.getMilkName(currCoffee.getMilkType()));
+            orderDetails.append(",\t" + Data.getPriceByType(currCoffee.getCoffeeType()));
             orderDetails.append("$\n");
         }
-        totalOrder.setText("\nTOTAL - " + total + "$");
+        String totalOrderString = "\nTOTAL - " + total + "$";
+        totalOrder.setText(totalOrderString);
     }
 
     /**
@@ -189,7 +149,7 @@ public class Payment extends Activity implements View.OnTouchListener {
             }
 
             if (!isValid) {
-                cvvField.setError("Enter a valid cvv number (3 digits)");
+                cvvField.setError(Data.INVALID_CVV_NUM_MSG);
             } else {
                 cvvField.setError(null);
             }
@@ -220,9 +180,9 @@ public class Payment extends Activity implements View.OnTouchListener {
             }
 
             if (!isValid) {
-                creditCardField.setError("Enter a valid credit card number (16 digits)");
+                creditCardNumberField.setError(Data.INVALID_CREDIT_CARD_NUM_MSG);
             } else {
-                creditCardField.setError(null);
+                creditCardNumberField.setError(null);
             }
             isValidCard = isValid;
         }
@@ -236,7 +196,7 @@ public class Payment extends Activity implements View.OnTouchListener {
     /**
      * this object checks the text inserted to the date box
      */
-    private TextWatcher mDateEntryWatcher = new TextWatcher() {
+    private TextWatcher expDateWatcher = new TextWatcher() {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -247,8 +207,8 @@ public class Payment extends Activity implements View.OnTouchListener {
                     isValid = false;
                 } else {
                     working += "/";
-                    mDateEntryField.setText(working);
-                    mDateEntryField.setSelection(working.length());
+                    creditCardExpField.setText(working);
+                    creditCardExpField.setSelection(working.length());
                 }
             } else if (working.length() == 5 && before == 0) {
                 String enteredYear = working.substring(3);
@@ -261,9 +221,9 @@ public class Payment extends Activity implements View.OnTouchListener {
             }
 
             if (!isValid) {
-                mDateEntryField.setError("Enter a valid date: MM/YY");
+                creditCardExpField.setError(Data.INVALID_EXP_DATE_MSG);
             } else {
-                mDateEntryField.setError(null);
+                creditCardExpField.setError(null);
             }
             isValidDate = isValid;
 
@@ -291,11 +251,11 @@ public class Payment extends Activity implements View.OnTouchListener {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             String working = s.toString();
-            //TODO
             boolean isValid = true;
 
             if (working.length() < 1) {
-                nameField.setError("Enter a Name");
+                nameField.setError(Data.EMPTY_NAME_MSG);
+                isValid = false;
             } else {
                 nameField.setError(null);
                 data.costumerName = working;
@@ -310,14 +270,14 @@ public class Payment extends Activity implements View.OnTouchListener {
     };
 
     /**
-     * this object responsible to execute the progress bar around the V key
+     * this object IS responsible to execute the progress bar around the V key
      */
     Runnable mAction = new Runnable() {
         @Override
         public void run() {
             if (!paymentDone && isValidDate && isValidCard && isValidCvv && isValidName) {
-                mDateEntryField.setError(null);
-                creditCardField.setError(null);
+                creditCardExpField.setError(null);
+                creditCardNumberField.setError(null);
                 cvvField.setError(null);
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
@@ -329,24 +289,24 @@ public class Payment extends Activity implements View.OnTouchListener {
                 paymentDone = true;
             } else {
                 if (isValidDate) {
-                    mDateEntryField.setError(null);
+                    creditCardExpField.setError(null);
                 } else {
-                    mDateEntryField.setError("Enter a valid date: MM/YYYY");
+                    creditCardExpField.setError(Data.INVALID_EXP_DATE_MSG);
                 }
                 if (isValidCard) {
-                    creditCardField.setError(null);
+                    creditCardNumberField.setError(null);
                 } else {
-                    creditCardField.setError("Enter a valid credit card number (16 digits)");
+                    creditCardNumberField.setError(Data.INVALID_CREDIT_CARD_NUM_MSG);
                 }
                 if (isValidCvv) {
                     cvvField.setError(null);
                 } else {
-                    cvvField.setError("Enter a valid cvv number (3 digits)");
+                    cvvField.setError(Data.INVALID_CVV_NUM_MSG);
                 }
                 if (isValidName) {
                     nameField.setError(null);
                 } else {
-                    nameField.setError("Enter a Name");
+                    nameField.setError(Data.EMPTY_NAME_MSG);
                 }
             }
         }
@@ -355,12 +315,14 @@ public class Payment extends Activity implements View.OnTouchListener {
     /**
      * this function execute when the user tap on the screen. This functions checks on which element
      * the user pressed and continue accordingly
+     * //todo
      *
-     * @param v
-     * @param event
-     * @return
+     * @param view  the view object
+     * @param event the event that occurred
+     * @return true if handler is null else false
      */
-    public boolean onTouch(View v, MotionEvent event) {
+    @SuppressLint("ClickableViewAccessibility")
+    public boolean onTouch(View view, MotionEvent event) {
         System.out.println(event.getAction());
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -398,36 +360,6 @@ public class Payment extends Activity implements View.OnTouchListener {
             }
             lock = true;
             for (int i = 4; i < s.length(); i += 5) {
-                if (s.toString().charAt(i) != ' ') {
-                    s.insert(i, " ");
-                }
-            }
-            lock = false;
-        }
-    }
-
-    /**
-     * Formatting an expression date for credit card
-     */
-    public static class CreditCardExpFormattingTextWatcher implements TextWatcher {
-
-        private boolean lock;
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            if (lock || s.length() > 5) {
-                return;
-            }
-            lock = true;
-            for (int i = 2; i < s.length(); i += 2) {
                 if (s.toString().charAt(i) != ' ') {
                     s.insert(i, " ");
                 }

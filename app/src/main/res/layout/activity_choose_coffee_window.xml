@@ -9,10 +9,6 @@
     android:background="@drawable/gradient_list_coffee"
     tools:context=".ChooseCoffeeWindow">
 
-    <!--    android:paddingLeft="@android:dimen/thumbnail_width"-->
-    <!--    android:paddingRight="@dimen/activity_horizontal_margin"-->
-    <!--    android:paddingTop="@dimen/activity_vertical_margin"-->
-
 
     <LinearLayout
         android:id="@+id/SliderDots1"
@@ -80,76 +76,65 @@
         app:lottie_speed="1.5" />
 
 
-    <!--        <ImageButton-->
-    <!-- for upper button: android:layout_marginEnd="20dp"
-        android:layout_marginRight="0dp"   -->
-    <!--            android:id="@+id/proceed_to_cart"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_gravity="bottom"-->
-    <!--            android:background="@drawable/ripple_3"-->
-    <!--            android:src="@drawable/next_2" />-->
+    <ImageView
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@drawable/gradient_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        android:gravity="center|top"
+        android:padding="5dp"
+        android:shadowColor="@color/black"
+        android:shadowDx="-2"
+        android:shadowDy="-2"
+        android:shadowRadius="20"
+        android:text="Swipe And Choose \nYour Coffee"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/cherry_swash_bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/appBar" />
 
 
-<ImageView
-android:background="@drawable/gradient_back"
-android:id="@+id/appBar"
-android:layout_height="90dp"
-android:layout_width="match_parent"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toTopOf="parent" />
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/shop_cart_view"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/animation_button"
+        android:foreground="@drawable/ripple_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="add_to_cart.json"
+        app:lottie_loop="false"
+        app:lottie_speed="1.5" />
 
-<TextView
-android:background="#00FFFFFF"
-android:gravity="center|top"
-android:id="@+id/textView3"
-android:layout_height="wrap_content"
-android:layout_width="match_parent"
-android:padding="5dp"
-android:shadowColor="@color/black"
-android:shadowDx="-2"
-android:shadowDy="-2"
-android:shadowRadius="20"
-android:text="Swipe And Choose \nYour Coffee"
-android:textAllCaps="false"
-android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-android:textColor="#FFFFFF"
-android:textSize="25sp"
-android:textStyle="bold"
-app:fontFamily="@font/cherry_swash_bold"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toTopOf="@+id/appBar" />
+    <com.nex3z.notificationbadge.NotificationBadge
+        android:id="@+id/badge"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="-8dp"
+        app:badgeBackground="@drawable/badge_bg_with_shadow"
+        app:layout_constraintRight_toRightOf="@id/shop_cart_view"
+        app:layout_constraintTop_toTopOf="@+id/shop_cart_view"
+        app:maxTextLength="2" />
 
 
-<com.airbnb.lottie.LottieAnimationView
-    android:foreground="@drawable/ripple_2"
-    android:background="@drawable/animation_button"
-    android:id="@+id/shop_cart_view"
-    android:layout_height="45dp"
-    android:layout_marginEnd="10dp"
-    android:layout_marginTop="10dp"
-    android:layout_width="45dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:lottie_autoPlay="false"
-    app:lottie_fileName="add_to_cart.json"
-    app:lottie_loop="false"
-    app:lottie_speed="1.5" />
-
-<com.nex3z.notificationbadge.NotificationBadge
-android:id="@+id/badge"
-android:layout_height="28dp"
-android:layout_marginTop="-8dp"
-android:layout_width="28dp"
-app:badgeBackground="@drawable/badge_bg_with_shadow"
-app:layout_constraintRight_toRightOf="@id/shop_cart_view"
-app:layout_constraintTop_toTopOf="@+id/shop_cart_view"
-app:maxTextLength="2" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

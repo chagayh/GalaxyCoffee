@@ -1,11 +1,10 @@
 package com.example.galaxycoffie3;
 
-import java.io.Serializable;
 
 /**
  * Class representing a Coffee object
  */
-public class Coffee{
+class Coffee {
     /* the price of the coffee*/
     private float price;
     /* enum representing the coffee type i.e. the drawing on top of it*/
@@ -26,20 +25,12 @@ public class Coffee{
     }
 
 
-    public float getPrice() {
+    float getPrice() {
         return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
     }
 
     Data.CoffeeTypes getCoffeeType() {
         return coffeeType;
-    }
-
-    public void setCoffeeType(Data.CoffeeTypes coffeeType) {
-        this.coffeeType = coffeeType;
     }
 
     Data.MilkTypes getMilkType() {
